@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans KR", Inter, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --color-slate-850: #1e293b;
+  --color-navy-900: #1e3a8a;
+  --color-sage-600: #577a68;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+/* Minimal print styles to ensure watermark prints if user forces print */
+@media print {
+  .no-print { display: none !important; }
+  .print-watermark { opacity: 0.1 !important; }
+}
