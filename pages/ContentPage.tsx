@@ -11,8 +11,8 @@ interface Props {
 
 const SectionRenderer: React.FC<{ section: ContentSection }> = ({ section }) => {
   return (
-    <div className="mb-10 p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-      <h3 className="text-xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">
+    <div className="mb-4 p-5 md:p-6 bg-white rounded-xl shadow-sm border border-slate-100">
+      <h3 className="text-base font-bold text-slate-800 mb-3 pb-2 border-b border-slate-50">
         {section.title}
       </h3>
       
@@ -69,15 +69,19 @@ export const ContentPage: React.FC<Props> = ({ type }) => {
     return null;
   }
 
-  if (!hasAccess && mbti !== 'ENTP') { 
-    // Note: For this demo, ENTP is unlocked by the "DEMO-KEY", others only if Bundle bought.
-    // If not accessible:
+  if (!hasAccess && mbti !== 'ENTP') {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-        <Lock className="w-16 h-16 mx-auto text-slate-300 mb-6" />
-        <h2 className="text-2xl font-bold text-slate-900 mb-2">접근 권한 없음</h2>
-        <p className="text-slate-600 mb-8">{mbti} 패키지에 대한 라이선스가 없습니다.</p>
-        <a href="#/products" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium">상품 보러가기</a>
+      <div className="min-h-[70vh] flex items-center justify-center px-4 page-enter">
+        <div className="text-center max-w-sm">
+          <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <Lock className="w-7 h-7 text-slate-300" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">접근 권한 없음</h2>
+          <p className="text-sm text-slate-500 mb-6">{mbti} 패키지에 대한 라이선스가 없습니다.</p>
+          <a href="#/products" className="inline-block px-5 py-2.5 bg-[#223B82] text-white rounded-lg font-bold text-sm hover:bg-[#1A2D66] transition-colors">
+            가이드 보러가기
+          </a>
+        </div>
       </div>
     );
   }
@@ -96,40 +100,40 @@ export const ContentPage: React.FC<Props> = ({ type }) => {
     >
       <Watermark user={user} />
       
-      <div className="relative z-10 max-w-3xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8 no-print">
-          <a href="#/dashboard" className="flex items-center text-slate-500 hover:text-slate-800 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-1" /> 서재로 돌아가기
+      <div className="relative z-10 max-w-3xl mx-auto px-4 py-8 md:py-12 page-enter">
+        <div className="flex items-center justify-between mb-6 no-print">
+          <a href="#/dashboard" className="flex items-center text-sm text-slate-400 hover:text-slate-700 transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5 mr-1" /> 보관함
           </a>
-          <button onClick={() => window.print()} className="flex items-center text-slate-500 hover:text-blue-600">
-            <Printer className="w-4 h-4 mr-1" /> 인쇄
+          <button onClick={() => window.print()} className="flex items-center text-sm text-slate-400 hover:text-blue-600 transition-colors">
+            <Printer className="w-3.5 h-3.5 mr-1" /> 인쇄
           </button>
         </div>
 
-        <header className="mb-12 text-center">
-          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-bold tracking-wide mb-4">
-            학부모 필독 가이드 (대외비)
+        <header className="mb-10 text-center">
+          <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-bold tracking-wide mb-3">
+            학부모 필독 가이드
           </span>
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-4">{mbti} 자녀 지도 매뉴얼</h1>
-          <div className="flex items-center justify-center gap-2 text-xs text-slate-400 uppercase tracking-widest">
-            <ShieldAlert className="w-4 h-4" />
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">{mbti} 자녀 지도 매뉴얼</h1>
+          <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 uppercase tracking-widest">
+            <ShieldAlert className="w-3.5 h-3.5" />
             라이선스 소유자: {user.email}
           </div>
         </header>
 
-        <div className="space-y-2">
+        <div className="space-y-4">
           {content ? (
             content.sections.map((section, idx) => (
               <SectionRenderer key={idx} section={section} />
             ))
           ) : (
-            <div className="text-center py-12">콘텐츠를 찾을 수 없습니다.</div>
+            <div className="text-center py-12 text-sm text-slate-400">콘텐츠를 찾을 수 없습니다.</div>
           )}
         </div>
 
-        <footer className="mt-20 text-center text-slate-400 text-sm border-t border-slate-200 pt-8 no-print">
+        <footer className="mt-16 text-center text-slate-300 text-xs border-t border-slate-100 pt-6 no-print">
           <p>© 2024 ParentingMBTI. All rights reserved.</p>
-          <p className="mt-2 text-xs">이 문서는 디지털 워터마크로 보호되며 무단 배포 시 추적될 수 있습니다.</p>
+          <p className="mt-1">이 문서는 디지털 워터마크로 보호되며 무단 배포 시 추적될 수 있습니다.</p>
         </footer>
       </div>
     </div>

@@ -158,23 +158,24 @@ export const MBTITest: React.FC = () => {
   if (showResult) {
     const result = calculateResult();
     return (
-      <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl text-center">
-          <h2 className="text-3xl font-extrabold text-slate-900">
+      <div className="min-h-[80vh] flex items-center justify-center px-4 page-enter">
+        <div className="max-w-sm w-full bg-white rounded-2xl shadow-lg border border-slate-100 p-8 text-center">
+          <p className="text-xs text-slate-400 uppercase tracking-widest mb-3">분석 결과</p>
+          <h2 className="text-xl font-bold text-slate-900 mb-6">
             우리 아이의 MBTI는?
           </h2>
-          <div className="text-6xl font-black text-blue-600 my-8">
+          <div className="text-5xl font-black text-[#223B82] mb-6">
             {result}
           </div>
-          <p className="text-lg text-slate-600 mb-8">
-            {result} 유형에 딱 맞는 자녀 지도 가이드를 확인해보세요.
+          <p className="text-sm text-slate-500 mb-8 leading-relaxed">
+            {result} 유형에 딱 맞는<br />자녀 지도 가이드를 확인해보세요.
           </p>
           <a
             href={`#/products?type=${result}`}
-            className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:text-lg md:px-10 transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-[#223B82] text-white rounded-xl font-bold hover:bg-[#1A2D66] transition-colors shadow-md text-sm"
           >
             맞춤형 가이드 보러가기
-            <ArrowRight className="ml-2 w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </a>
           <button
             onClick={() => {
@@ -182,7 +183,7 @@ export const MBTITest: React.FC = () => {
               setStep(0);
               setShowResult(false);
             }}
-            className="mt-4 text-sm text-slate-500 hover:text-slate-700 underline"
+            className="mt-4 text-xs text-slate-400 hover:text-slate-600 transition-colors"
           >
             다시 테스트하기
           </button>
@@ -195,40 +196,43 @@ export const MBTITest: React.FC = () => {
   const progress = ((step + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Progress Bar */}
-        <div className="w-full bg-slate-200 rounded-full h-2.5 mb-8">
+    <div className="max-w-xl mx-auto px-4 py-8 md:py-12 page-enter">
+      {/* Progress */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-xs font-bold text-[#223B82]">
+            {step + 1} / {questions.length}
+          </span>
+          <span className="text-xs text-slate-400">{Math.round(progress)}%</span>
+        </div>
+        <div className="w-full bg-slate-100 rounded-full h-1.5">
           <div
-            className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-out"
+            className="bg-[#223B82] h-1.5 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
+      </div>
 
-        <div className="bg-white p-8 rounded-2xl shadow-lg">
-          <span className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
-            Question {step + 1} / {questions.length}
-          </span>
-          <h2 className="text-2xl font-bold text-slate-900 mt-4 mb-8">
-            {currentQuestion.text}
-          </h2>
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+        <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-6 leading-snug">
+          {currentQuestion.text}
+        </h2>
 
-          <div className="space-y-4">
-            {currentQuestion.options.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => handleAnswer(option.value)}
-                className="w-full text-left p-6 rounded-xl border-2 border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 group"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-lg text-slate-700 group-hover:text-blue-700 font-medium">
-                    {option.label}
-                  </span>
-                  <Check className="w-5 h-5 text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </button>
-            ))}
-          </div>
+        <div className="space-y-3">
+          {currentQuestion.options.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => handleAnswer(option.value)}
+              className="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-400 hover:bg-blue-50/50 transition-all duration-150 group active:scale-[0.98]"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-sm text-slate-700 group-hover:text-blue-700 font-medium leading-relaxed">
+                  {option.label}
+                </span>
+                <Check className="w-4 h-4 text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+              </div>
+            </button>
+          ))}
         </div>
       </div>
     </div>

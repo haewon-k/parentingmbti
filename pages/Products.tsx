@@ -13,13 +13,11 @@ export const Products: React.FC = () => {
     if (hash.includes('?')) {
       const params = new URLSearchParams(hash.split('?')[1]);
       const type = params.get('type');
-      if (type) {
-        setSelectedType(type);
-      }
+      if (type) setSelectedType(type);
     }
   }, []);
 
-  const filteredProducts = selectedType 
+  const filteredProducts = selectedType
     ? PRODUCTS.filter(p => p.mbtiType === selectedType || p.mbtiType === MBTIType.BUNDLE)
     : PRODUCTS;
 
@@ -30,49 +28,54 @@ export const Products: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-slate-900">
-          {selectedType ? `${selectedType} 자녀를 위한 맞춤 가이드` : '자녀의 MBTI를 선택하세요'}
+    <div className="max-w-5xl mx-auto px-4 py-8 md:py-12 page-enter">
+      <div className="text-center mb-10">
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+          {selectedType ? `${selectedType} 자녀 맞춤 가이드` : '자녀 MBTI 가이드'}
         </h1>
         {selectedType ? (
-          <button 
+          <button
             onClick={() => {
               setSelectedType(null);
               window.history.replaceState(null, '', '#/products');
             }}
-            className="mt-4 inline-flex items-center text-sm text-slate-500 hover:text-slate-700 underline"
+            className="mt-3 inline-flex items-center text-xs text-slate-400 hover:text-slate-600 transition-colors"
           >
-            <X className="w-4 h-4 mr-1" />
+            <X className="w-3.5 h-3.5 mr-0.5" />
             전체 보기
           </button>
         ) : (
-          <p className="text-slate-600 mt-2">아직 모르시나요? <a href="#/mbti-test" className="text-blue-600 underline hover:text-blue-700">간이 테스트</a>를 먼저 해보세요.</p>
+          <p className="text-sm text-slate-400 mt-2">
+            MBTI를 모르시나요? <a href="#/mbti-test" className="text-blue-600 hover:underline font-medium">간이 테스트</a>를 해보세요.
+          </p>
         )}
       </div>
 
       {/* Bundle Highlight */}
       {!isPurchased('prod_bundle') && (
-        <div className="mb-16 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-xl transform hover:scale-[1.01] transition-transform">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mb-10 bg-white rounded-2xl p-6 md:p-8 border-2 border-blue-100 shadow-sm">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-                <span className="font-semibold text-blue-100 tracking-wider text-sm">BEST VALUE</span>
+                <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                <span className="font-bold text-amber-600 tracking-wider text-xs uppercase">Best Value</span>
               </div>
-              <h2 className="text-3xl font-bold mb-4">MBTI 16종 전체 패키지</h2>
-              <p className="text-blue-100 max-w-xl text-lg">
-                다자녀 가정, 교육자, 상담사를 위한 최고의 선택. 16가지 모든 유형의 가이드를 평생 소장하세요.
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">16종 전체 패키지</h2>
+              <p className="text-slate-500 text-sm max-w-md">
+                다자녀 가정, 교육자, 상담사를 위한 최고의 선택.
               </p>
             </div>
-            <div className="flex flex-col items-end min-w-[200px]">
-              <span className="text-4xl font-bold mb-2">129,000원</span>
-              <span className="text-blue-200 line-through text-sm mb-4">정가 624,000원</span>
-              <a 
-                href="https://gumroad.com" 
+            <div className="flex flex-col items-start md:items-end w-full md:w-auto">
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-3xl font-bold text-slate-900">63,680원</span>
+                <span className="text-slate-400 line-through text-sm">318,400원</span>
+              </div>
+              <span className="text-xs font-bold text-red-500 mb-2">80% 할인</span>
+              <a
+                href="https://gumroad.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full text-center bg-white text-blue-700 font-bold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
+                className="mt-1 w-full md:w-auto text-center bg-[#223B82] text-white font-bold py-2.5 px-6 rounded-lg hover:bg-[#1A2D66] transition-colors shadow-sm text-sm"
               >
                 전체 패키지 구매
               </a>
@@ -82,55 +85,54 @@ export const Products: React.FC = () => {
       )}
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         {filteredProducts.filter(p => p.mbtiType !== MBTIType.BUNDLE).map((product) => {
           const purchased = isPurchased(product.id);
-          
           return (
-            <div 
-              key={product.id} 
-              className={`rounded-xl border p-6 flex flex-col transition-all ${
-                purchased 
-                  ? 'bg-slate-50 border-slate-200' 
-                  : 'bg-white border-slate-200 hover:shadow-lg'
+            <div
+              key={product.id}
+              className={`rounded-xl border p-4 md:p-5 flex flex-col transition-all duration-200 ${
+                purchased
+                  ? 'bg-slate-50/50 border-slate-100'
+                  : 'bg-white border-slate-100 hover:shadow-md hover:border-slate-200'
               }`}
             >
-              <div className="mb-4 flex justify-between items-start">
-                <span className={`inline-block px-3 py-1 rounded text-xs font-bold tracking-wide ${
-                  purchased ? 'bg-slate-200 text-slate-500' : 'bg-slate-100 text-slate-700'
+              <div className="mb-3 flex justify-between items-center">
+                <span className={`inline-block px-2.5 py-1 rounded-md text-xs font-bold ${
+                  purchased ? 'bg-slate-100 text-slate-400' : 'bg-blue-50 text-blue-700'
                 }`}>
                   {product.mbtiType}
                 </span>
-                {purchased && <CheckCircle className="w-5 h-5 text-green-500" />}
+                {purchased && <CheckCircle className="w-4 h-4 text-emerald-500" />}
               </div>
-              
-              <h3 className={`text-xl font-bold mb-2 ${purchased ? 'text-slate-500' : 'text-slate-900'}`}>
+
+              <h3 className={`text-sm font-bold mb-1 ${purchased ? 'text-slate-400' : 'text-slate-800'}`}>
                 {product.title}
               </h3>
-              <p className={`text-sm mb-6 flex-grow ${purchased ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-xs mb-4 flex-grow leading-relaxed ${purchased ? 'text-slate-300' : 'text-slate-400'}`}>
                 {product.description}
               </p>
-              
-              <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
+
+              <div className="mt-auto pt-3 border-t border-slate-50">
                 {purchased ? (
-                  <a 
+                  <a
                     href={`#/content/${product.mbtiType}`}
-                    className="w-full flex items-center justify-center text-sm font-bold text-slate-600 hover:text-slate-800 py-2 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors"
+                    className="block w-full text-center text-xs font-bold text-slate-500 hover:text-slate-700 py-1.5 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors"
                   >
-                    가이드 보러가기
+                    가이드 보기
                   </a>
                 ) : (
-                  <>
-                    <span className="text-lg font-bold text-slate-900">{product.price}</span>
-                    <a 
-                      href={product.gumroadUrl} 
-                      target="_blank" 
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-slate-800">{product.price}</span>
+                    <a
+                      href={product.gumroadUrl}
+                      target="_blank"
                       rel="noreferrer"
-                      className="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
+                      className="flex items-center text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
                     >
-                      구매하기 <ShoppingBag className="w-4 h-4 ml-1" />
+                      구매 <ShoppingBag className="w-3.5 h-3.5 ml-0.5" />
                     </a>
-                  </>
+                  </div>
                 )}
               </div>
             </div>

@@ -60,8 +60,8 @@ export const Compatibility: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">부모-자녀 MBTI 궁합 정밀 분석</h1>
+    <div className="max-w-4xl mx-auto px-4 py-8 md:py-12 page-enter">
+      <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 text-center">부모-자녀 MBTI 궁합 분석</h1>
       <p className="text-slate-500 text-center mb-10">인지 기능 충돌 원인부터 맞춤형 대화법까지, AI 전문가가 분석해드립니다.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">

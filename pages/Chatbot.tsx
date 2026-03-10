@@ -90,7 +90,7 @@ export const Chatbot: React.FC = () => {
         }
 
         chatRef.current = ai.chats.create({
-          model: 'gemini-3-flash-preview',
+          model: 'gemini-3-pro-preview',
           config: {
             thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
             systemInstruction: `당신은 'ParentingMBTI' 서비스의 MBTI 자녀 지도 전문 AI 코치입니다.
@@ -150,28 +150,24 @@ export const Chatbot: React.FC = () => {
   return (
     <div className="h-[calc(100vh-64px)] flex flex-col bg-white">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0 shadow-sm z-10">
-        <div>
-          <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
-              <MessageCircle className="w-5 h-5" />
-            </div>
-            AI 자녀 코칭
-          </h1>
-          <div className="flex flex-col">
-            <p className="text-xs text-slate-500 mt-1">
-              초고속 AI 기반 실시간 상담
-            </p>
-            {user.childProfile && (
-              <p className="text-xs text-blue-600 font-medium mt-0.5">
-                • 자녀: {user.childProfile.name || '이름 없음'} ({user.childProfile.age}, {user.childProfile.mbti})
-                {(user.parentProfile1 || user.parentProfile) && ` / 부모1: ${(user.parentProfile1 || user.parentProfile)?.name || '이름 없음'} (${(user.parentProfile1 || user.parentProfile)?.mbti})`}
-                {user.parentProfile2 && ` / 부모2: ${user.parentProfile2.name || '이름 없음'} (${user.parentProfile2.mbti})`}
+      <div className="bg-white border-b border-slate-100 px-4 md:px-6 py-3 flex items-center justify-between shrink-0 z-10">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 bg-[#223B82] rounded-full flex items-center justify-center text-white shrink-0">
+            <MessageCircle className="w-4 h-4" />
+          </div>
+          <div className="min-w-0">
+            <h1 className="text-sm font-bold text-slate-900">AI 자녀 코칭</h1>
+            {user.childProfile ? (
+              <p className="text-[11px] text-slate-400 truncate">
+                {user.childProfile.name || '자녀'} ({user.childProfile.mbti})
+                {(user.parentProfile1 || user.parentProfile) && ` · ${(user.parentProfile1 || user.parentProfile)?.name || '부모1'} (${(user.parentProfile1 || user.parentProfile)?.mbti})`}
               </p>
+            ) : (
+              <p className="text-[11px] text-slate-400">실시간 AI 상담</p>
             )}
           </div>
         </div>
-        <a href="#/dashboard" className="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-1 rounded-md hover:bg-slate-100 transition-colors">
+        <a href="#/dashboard" className="text-xs font-medium text-slate-400 hover:text-slate-700 px-2.5 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
           나가기
         </a>
       </div>
@@ -226,26 +222,26 @@ export const Chatbot: React.FC = () => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-slate-200">
-        <form onSubmit={handleSend} className="max-w-4xl mx-auto relative flex gap-2">
-            <input 
-              type="text" 
+      <div className="p-3 md:p-4 bg-white border-t border-slate-100">
+        <form onSubmit={handleSend} className="max-w-3xl mx-auto flex gap-2">
+            <input
+              type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="예: 아이가 밥 먹을 때마다 돌아다녀서 힘들어요."
-              className="flex-grow px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-sm"
+              className="flex-grow px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all text-sm"
               disabled={isLoading}
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={!input.trim() || isLoading}
-              className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center min-w-[50px]"
+              className="px-3.5 py-2.5 bg-[#223B82] text-white rounded-lg hover:bg-[#1A2D66] disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4" />
             </button>
         </form>
-        <div className="text-center mt-2 flex items-center justify-center gap-1 text-[10px] text-slate-400">
-            <AlertTriangle className="w-3 h-3" />
+        <div className="text-center mt-1.5 flex items-center justify-center gap-1 text-[10px] text-slate-300">
+            <AlertTriangle className="w-2.5 h-2.5" />
             <span>AI는 부정확한 정보를 제공할 수 있습니다.</span>
         </div>
       </div>
